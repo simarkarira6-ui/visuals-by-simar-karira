@@ -6,6 +6,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root {
+  color-scheme: light only;
+  forced-color-adjust: none;
+
   /* Dynamic Accent Color (Managed via Admin) */
   --accent-color: #ff5722; /* Vintage Tangerine Sunset */
   --accent-contrast: #ffffff;
@@ -67,14 +70,18 @@ html {
   color: var(--retro-ink);
   font-family: var(--font-mono);
   -webkit-font-smoothing: antialiased;
+  color-scheme: light only;
+  forced-color-adjust: none;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.55;
-  background-color: var(--retro-paper);
-  color: var(--retro-ink);
+  background-color: var(--retro-paper) !important;
+  color: var(--retro-ink) !important;
+  color-scheme: light only;
+  forced-color-adjust: none;
   /* Subtle vintage print grain & paper texture */
   background-image: 
     radial-gradient(circle at 50% 50%, rgba(25, 22, 20, 0.035) 1px, transparent 1px),
@@ -283,7 +290,6 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
   gap: 16px;
   border-bottom: 2px dashed var(--retro-ink);
   padding-bottom: 18px;
@@ -311,8 +317,9 @@ button {
 
 .retro-stickers-wrap {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .retro-sticker {
@@ -350,9 +357,9 @@ button {
   font-weight: 900;
   line-height: 0.82;
   letter-spacing: -0.04em;
-  color: var(--retro-ink);
+  color: var(--retro-ink) !important;
   text-transform: uppercase;
-  text-shadow: 6px 6px 0px var(--accent-color);
+  text-shadow: 6px 6px 0px var(--accent-color) !important;
   margin-left: -5px;
 }
 
