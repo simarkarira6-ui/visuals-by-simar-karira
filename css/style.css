@@ -1,0 +1,1242 @@
+/* ==========================================================================
+   SIMAR — GRAPHIC DESIGNER PORTFOLIO
+   Design Aesthetic: Bold Retro Vintage Graphic Arts / Editorial Risograph & Printshop
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Dynamic Accent Color (Managed via Admin) */
+  --accent-color: #ff5722; /* Vintage Tangerine Sunset */
+  --accent-contrast: #ffffff;
+
+  /* Retro Vintage Vibrant Color Palette */
+  --retro-paper: #faf4e8;        /* Warm vintage newsprint / cream */
+  --retro-paper-light: #ffffff;
+  --retro-paper-dark: #f0e6d2;
+  --retro-ink: #191614;          /* Deep rich espresso-charcoal ink */
+  --retro-ink-muted: #5e574f;    /* Faded typewriter ink */
+
+  /* Vibrant Retro Spot Colors (Risograph / Screenprint Inspired) */
+  --color-orange: #ff5e36;
+  --color-yellow: #ffb703;
+  --color-cyan: #00b4d8;
+  --color-green: #2ec4b6;
+  --color-purple: #7209b7;
+  --color-pink: #ff007f;
+  --color-red: #e63946;
+  --color-lime: #b5e48c;
+
+  /* Card Colors for Vibrant Expertise Grid */
+  --card-tint-1: #fee8e1;
+  --card-tint-2: #fef5d8;
+  --card-tint-3: #e0f9f6;
+  --card-tint-4: #e1f5fe;
+  --card-tint-5: #f4e8fd;
+  --card-tint-6: #fde8ee;
+  --card-tint-7: #eaf8df;
+
+  /* Typography */
+  --font-vintage: 'Fraunces', Georgia, serif;
+  --font-display: 'Syne', sans-serif;
+  --font-mono: 'Space Grotesk', monospace, sans-serif;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Retro Offset Shadows */
+  --shadow-retro: 4px 4px 0px var(--retro-ink);
+  --shadow-retro-lg: 8px 8px 0px var(--retro-ink);
+  --shadow-retro-hover: 6px 6px 0px var(--retro-ink);
+  --border-retro: 2px solid var(--retro-ink);
+  --border-retro-thick: 3px solid var(--retro-ink);
+
+  --container-max: 1380px;
+  --transition-pop: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  background-color: var(--retro-paper);
+  color: var(--retro-ink);
+  font-family: var(--font-mono);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.55;
+  background-color: var(--retro-paper);
+  color: var(--retro-ink);
+  /* Subtle vintage print grain & paper texture */
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(25, 22, 20, 0.035) 1px, transparent 1px),
+    linear-gradient(to right, rgba(25, 22, 20, 0.015) 1px, transparent 1px);
+  background-size: 24px 24px, 120px 120px;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--accent-color);
+  color: var(--accent-contrast);
+}
+
+/* Typography Hierarchy */
+h1, h2, h3, h4, .vintage-font {
+  font-family: var(--font-vintage);
+  font-weight: 800;
+  line-height: 0.95;
+  color: var(--retro-ink);
+  letter-spacing: -0.02em;
+}
+
+p {
+  font-family: var(--font-mono);
+  color: var(--retro-ink-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-pop);
+}
+
+button {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
+}
+
+/* ==========================================================================
+   RETRO VINTAGE HEADER
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 18px 0;
+  background-color: var(--retro-paper);
+  border-bottom: var(--border-retro-thick);
+  box-shadow: 0 4px 0 rgba(25, 22, 20, 0.08);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.site-logo {
+  font-family: var(--font-vintage);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--retro-ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.04em;
+}
+
+.logo-stamp {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  background-color: var(--accent-color);
+  color: var(--accent-contrast);
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1.5px solid var(--retro-ink);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  transform: rotate(-3deg);
+}
+
+.role-badge {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--retro-ink-muted);
+  border-left: 2px solid var(--retro-ink);
+  padding-left: 12px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+
+.nav-link {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--retro-ink);
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  transition: var(--transition-pop);
+}
+
+.nav-link:hover, .nav-link.active {
+  background-color: var(--color-yellow);
+  border: 2px solid var(--retro-ink);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  transform: translate(-1px, -1px);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--retro-ink);
+  background-color: var(--retro-paper-dark);
+  padding: 7px 14px;
+  border: var(--border-retro);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  transition: var(--transition-pop);
+}
+
+.admin-link:hover {
+  background-color: var(--color-lime);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--retro-ink);
+}
+
+.mobile-menu-toggle {
+  display: none;
+  font-size: 1.6rem;
+  color: var(--retro-ink);
+}
+
+/* ==========================================================================
+   HERO SECTION (Bold Vintage Typography & Colorful Retro Accents)
+   ========================================================================== */
+.hero-section {
+  padding-top: 150px;
+  padding-bottom: 70px;
+  position: relative;
+  border-bottom: var(--border-retro-thick);
+  background: 
+    radial-gradient(ellipse at 85% 20%, rgba(255, 183, 3, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 70%, rgba(255, 94, 54, 0.15) 0%, transparent 45%);
+}
+
+.hero-editorial-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  position: relative;
+}
+
+/* Retro Top Bar with Stamps & Badges */
+.hero-meta-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  border-bottom: 2px dashed var(--retro-ink);
+  padding-bottom: 18px;
+}
+
+.hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro);
+  padding: 6px 14px;
+  border-radius: 20px;
+  box-shadow: 3px 3px 0px var(--retro-ink);
+}
+
+.retro-sparkle {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+
+.retro-stickers-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.retro-sticker {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 3px;
+  border: var(--border-retro);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+}
+
+.retro-sticker.st-1 {
+  background-color: var(--color-cyan);
+  color: #fff;
+  transform: rotate(2deg);
+}
+
+.retro-sticker.st-2 {
+  background-color: var(--color-yellow);
+  color: var(--retro-ink);
+  transform: rotate(-2deg);
+}
+
+/* Giant Vintage Headline */
+.hero-typography {
+  margin: 10px 0;
+  position: relative;
+}
+
+.hero-giant-title {
+  font-family: var(--font-vintage);
+  font-size: clamp(5.5rem, 18vw, 16rem);
+  font-weight: 900;
+  line-height: 0.82;
+  letter-spacing: -0.04em;
+  color: var(--retro-ink);
+  text-transform: uppercase;
+  text-shadow: 6px 6px 0px var(--accent-color);
+  margin-left: -5px;
+}
+
+.hero-giant-subtitle {
+  font-family: var(--font-vintage);
+  font-size: clamp(2.2rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  color: var(--color-yellow);
+  -webkit-text-stroke: 3px var(--retro-ink);
+  text-transform: uppercase;
+  text-shadow: 4px 4px 0px var(--retro-ink);
+  margin-top: 10px;
+}
+
+.hero-bottom-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 50px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.hero-intro-card {
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  padding: 28px 32px;
+  border-radius: 8px;
+  box-shadow: var(--shadow-retro);
+  position: relative;
+}
+
+.hero-intro-card::before {
+  content: '“';
+  position: absolute;
+  top: -24px;
+  left: 20px;
+  font-family: var(--font-vintage);
+  font-size: 5rem;
+  color: var(--accent-color);
+  line-height: 1;
+}
+
+.hero-intro-text {
+  font-family: var(--font-mono);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  line-height: 1.55;
+  color: var(--retro-ink);
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Retro Buttons with Pop Shadow */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--accent-color);
+  color: var(--accent-contrast);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 16px 32px;
+  border: var(--border-retro-thick);
+  border-radius: 6px;
+  box-shadow: var(--shadow-retro);
+  transition: var(--transition-pop);
+}
+
+.btn-primary:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-retro-hover);
+  background-color: var(--color-orange);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: var(--retro-paper-light);
+  color: var(--retro-ink);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 16px 28px;
+  border: var(--border-retro-thick);
+  border-radius: 6px;
+  box-shadow: var(--shadow-retro);
+  transition: var(--transition-pop);
+}
+
+.btn-secondary:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: var(--shadow-retro-hover);
+  background-color: var(--color-yellow);
+}
+
+/* ==========================================================================
+   RETRO KINETIC TICKER
+   ========================================================================== */
+.ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-yellow);
+  border-bottom: var(--border-retro-thick);
+  padding: 14px 0;
+  white-space: nowrap;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.ticker-content {
+  display: inline-flex;
+  animation: ticker 30s linear infinite;
+}
+
+.ticker-item {
+  font-family: var(--font-vintage);
+  font-size: 1.15rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--retro-ink);
+  padding: 0 28px;
+}
+
+.ticker-item span {
+  color: var(--accent-color);
+  margin-left: 20px;
+  font-size: 1.3rem;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ==========================================================================
+   SECTION COMMON LAYOUT
+   ========================================================================== */
+.section {
+  padding: 110px 0;
+  border-bottom: var(--border-retro-thick);
+  position: relative;
+}
+
+.section-header-editorial {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 60px;
+  border-bottom: var(--border-retro-thick);
+  padding-bottom: 24px;
+}
+
+.section-stamp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: var(--color-cyan);
+  color: #fff;
+  padding: 4px 12px;
+  border: var(--border-retro);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-vintage);
+  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--retro-ink);
+}
+
+.section-subtitle {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--retro-ink-muted);
+  max-width: 340px;
+  text-align: right;
+  border: var(--border-retro);
+  background-color: var(--retro-paper-light);
+  padding: 12px 18px;
+  border-radius: 6px;
+  box-shadow: 3px 3px 0px var(--retro-ink);
+}
+
+/* ==========================================================================
+   01 / ABOUT SECTION
+   ========================================================================== */
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.about-badge-card {
+  background-color: var(--card-tint-1);
+  border: var(--border-retro-thick);
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: var(--shadow-retro-lg);
+  position: relative;
+}
+
+.retro-seal {
+  width: 90px;
+  height: 90px;
+  border: 3px dashed var(--retro-ink);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  background-color: var(--color-yellow);
+  box-shadow: 3px 3px 0px var(--retro-ink);
+  transform: rotate(-8deg);
+  margin-bottom: 24px;
+}
+
+.about-statement {
+  font-family: var(--font-vintage);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  line-height: 1.15;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: var(--retro-ink);
+}
+
+.about-details {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.about-narrative-card {
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  border-radius: 10px;
+  padding: 32px;
+  box-shadow: var(--shadow-retro);
+}
+
+.about-narrative {
+  font-family: var(--font-mono);
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--retro-ink);
+  line-height: 1.7;
+}
+
+.about-block-vintage {
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  border-radius: 10px;
+  padding: 28px 32px;
+  box-shadow: var(--shadow-retro);
+}
+
+.block-label-stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: var(--accent-color);
+  color: var(--accent-contrast);
+  padding: 4px 10px;
+  border: var(--border-retro);
+  border-radius: 3px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  margin-bottom: 14px;
+}
+
+.philosophy-text {
+  font-family: var(--font-vintage);
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--retro-ink);
+  line-height: 1.5;
+}
+
+.tools-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tool-chip {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  background-color: var(--color-yellow);
+  color: var(--retro-ink);
+  padding: 8px 16px;
+  border: var(--border-retro);
+  border-radius: 20px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  transition: var(--transition-pop);
+}
+
+.tool-chip:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--retro-ink);
+  background-color: var(--color-cyan);
+  color: #fff;
+}
+
+/* ==========================================================================
+   02 / SERVICES & SKILLS SECTION (Vibrant Colorful Risograph Cards)
+   ========================================================================== */
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 24px;
+}
+
+.skill-card {
+  padding: 32px 28px;
+  border: var(--border-retro-thick);
+  border-radius: 10px;
+  box-shadow: var(--shadow-retro);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 190px;
+  transition: var(--transition-pop);
+}
+
+/* Distinct retro vibrant colorways for each skill card */
+.skill-card:nth-child(1) { background-color: var(--card-tint-1); }
+.skill-card:nth-child(2) { background-color: var(--card-tint-2); }
+.skill-card:nth-child(3) { background-color: var(--card-tint-3); }
+.skill-card:nth-child(4) { background-color: var(--card-tint-4); }
+.skill-card:nth-child(5) { background-color: var(--card-tint-5); }
+.skill-card:nth-child(6) { background-color: var(--card-tint-6); }
+.skill-card:nth-child(7) { background-color: var(--card-tint-7); }
+
+.skill-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-retro-lg);
+}
+
+.skill-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-index {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  background-color: var(--retro-ink);
+  color: var(--retro-paper);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.skill-cat {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--retro-ink);
+  border: 1.5px solid var(--retro-ink);
+  background-color: var(--retro-paper-light);
+  padding: 3px 10px;
+  border-radius: 20px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+}
+
+.skill-name {
+  font-family: var(--font-vintage);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--retro-ink);
+  margin-top: 24px;
+  line-height: 1.1;
+}
+
+/* ==========================================================================
+   03 / PORTFOLIO / WORK SECTION (Strictly NO fake data!)
+   ========================================================================== */
+.portfolio-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.filter-group {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--retro-ink);
+  background-color: var(--retro-paper-light);
+  padding: 10px 22px;
+  border: var(--border-retro);
+  border-radius: 30px;
+  box-shadow: 3px 3px 0px var(--retro-ink);
+  transition: var(--transition-pop);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  color: var(--accent-contrast);
+  background-color: var(--accent-color);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--retro-ink);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+}
+
+/* Real Project Card */
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-retro);
+  transition: var(--transition-pop);
+}
+
+.project-card:hover {
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-retro-lg);
+}
+
+.project-thumb-wrap {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-bottom: var(--border-retro-thick);
+  position: relative;
+  background-color: var(--retro-paper-dark);
+}
+
+.project-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover .project-thumb {
+  transform: scale(1.04);
+}
+
+.project-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(25, 22, 20, 0.4);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.view-case-btn {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--accent-contrast);
+  background-color: var(--accent-color);
+  padding: 12px 24px;
+  border: var(--border-retro);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0px var(--retro-ink);
+}
+
+.project-info {
+  padding: 24px;
+}
+
+.project-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.project-cat {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background-color: var(--color-yellow);
+  color: var(--retro-ink);
+  padding: 3px 10px;
+  border-radius: 4px;
+  border: 1.5px solid var(--retro-ink);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+}
+
+.project-year {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--retro-ink-muted);
+}
+
+.project-title {
+  font-family: var(--font-vintage);
+  font-size: 2rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--retro-ink);
+  line-height: 1.1;
+}
+
+.project-desc-short {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: var(--retro-ink-muted);
+  line-height: 1.55;
+}
+
+/* ==========================================================================
+   RETRO ARCHIVAL EMPTY STATE (NO DUMMY PROJECTS)
+   ========================================================================== */
+.empty-portfolio-editorial {
+  grid-column: 1 / -1;
+  padding: 90px 40px;
+  border: 3px dashed var(--retro-ink);
+  border-radius: 14px;
+  background-color: var(--card-tint-2);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: var(--shadow-retro);
+  position: relative;
+}
+
+.empty-graphic-icon {
+  width: 80px;
+  height: 80px;
+  border: var(--border-retro-thick);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--retro-ink);
+  background-color: var(--color-orange);
+  font-family: var(--font-vintage);
+  font-size: 2rem;
+  font-weight: 900;
+  box-shadow: 4px 4px 0px var(--retro-ink);
+  transform: rotate(5deg);
+}
+
+.empty-title {
+  font-family: var(--font-vintage);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  color: var(--retro-ink);
+}
+
+.empty-desc {
+  max-width: 520px;
+  font-family: var(--font-mono);
+  color: var(--retro-ink);
+  font-size: 1.15rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.empty-meta-tag {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background-color: var(--color-cyan);
+  color: #fff;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: var(--border-retro);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+}
+
+/* ==========================================================================
+   04 / CONTACT SECTION (Retro Screenprint Style)
+   ========================================================================== */
+.contact-section {
+  padding: 130px 0;
+  background-color: var(--retro-paper-dark);
+}
+
+.contact-huge-headline {
+  font-family: var(--font-vintage);
+  font-size: clamp(3.8rem, 12vw, 11rem);
+  font-weight: 900;
+  line-height: 0.84;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  color: var(--retro-ink);
+  text-shadow: 6px 6px 0px var(--color-yellow);
+  margin-bottom: 60px;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: start;
+}
+
+.contact-email-box {
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  border-radius: 12px;
+  padding: 36px;
+  box-shadow: var(--shadow-retro-lg);
+}
+
+.contact-box-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  background-color: var(--accent-color);
+  color: var(--accent-contrast);
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: var(--border-retro);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  margin-bottom: 20px;
+}
+
+.email-display-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.email-address {
+  font-family: var(--font-vintage);
+  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-weight: 900;
+  color: var(--retro-ink);
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-color: var(--accent-color);
+}
+
+.email-address:hover {
+  color: var(--accent-color);
+}
+
+.copy-email-btn {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 10px 18px;
+  border: var(--border-retro);
+  background-color: var(--color-yellow);
+  color: var(--retro-ink);
+  border-radius: 6px;
+  box-shadow: 3px 3px 0px var(--retro-ink);
+  transition: var(--transition-pop);
+}
+
+.copy-email-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px var(--retro-ink);
+  background-color: var(--color-cyan);
+  color: #fff;
+}
+
+.social-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.social-link-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  border-radius: 8px;
+  box-shadow: var(--shadow-retro);
+  font-family: var(--font-vintage);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--retro-ink);
+  transition: var(--transition-pop);
+}
+
+.social-link-item:hover {
+  background-color: var(--color-lime);
+  transform: translate(-4px, -4px);
+  box-shadow: var(--shadow-retro-lg);
+}
+
+.social-arrow {
+  font-family: var(--font-mono);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+/* ==========================================================================
+   RETRO FOOTER
+   ========================================================================== */
+.site-footer {
+  padding: 60px 0;
+  border-top: var(--border-retro-thick);
+  background-color: var(--retro-paper);
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
+.footer-brand {
+  font-family: var(--font-vintage);
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--retro-ink);
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--retro-ink-muted);
+}
+
+.back-to-top {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--retro-ink);
+  background-color: var(--color-yellow);
+  padding: 8px 16px;
+  border: var(--border-retro);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-pop);
+}
+
+.back-to-top:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px var(--retro-ink);
+}
+
+/* ==========================================================================
+   RESPONSIVE DESIGN
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .hero-bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .hero-actions {
+    justify-content: flex-start;
+  }
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .site-header {
+    padding: 14px 0;
+  }
+  .nav-links {
+    display: none;
+  }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: var(--retro-paper);
+    border-bottom: var(--border-retro-thick);
+    padding: 24px;
+    gap: 16px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  .mobile-menu-toggle {
+    display: block;
+  }
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .section {
+    padding: 70px 0;
+  }
+  .section-header-editorial {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .section-subtitle {
+    text-align: left;
+  }
+}

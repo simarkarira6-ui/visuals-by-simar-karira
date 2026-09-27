@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Simar Portfolio</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-family=%22sans-serif%22 font-weight=%22900%22 fill=%22%23d4ff00%22>⚙</text></svg>">
+
+  <link rel="stylesheet" href="css/admin.css">
+
+  <!-- Supabase Official JS SDK via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body class="admin-body">
+
+  <!-- =========================================================================
+       ADMIN AUTHENTICATION MODAL (Supabase Auth)
+       ========================================================================= -->
+  <div class="admin-auth-overlay" id="admin-auth-overlay">
+    <div class="admin-auth-card">
+      <div class="auth-brand">
+        <h1>SIMAR</h1>
+        <p>PORTFOLIO MANAGEMENT</p>
+      </div>
+
+      <h2 id="auth-card-title" style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 20px; text-align: center;">
+        ADMIN PORTAL LOGIN
+      </h2>
+
+      <form id="admin-auth-form" data-mode="login">
+        <div class="form-group">
+          <label for="auth-email">Admin Email</label>
+          <input type="email" id="auth-email" class="form-input" placeholder="admin@simardesign.com" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="auth-password">Password</label>
+          <input type="password" id="auth-password" class="form-input" placeholder="••••••••••••" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-admin-submit">Log In</button>
+      </form>
+
+      <div class="auth-switch-text">
+        <span id="auth-switch-link" class="auth-switch-link">Need to create your admin account? Sign up</span>
+      </div>
+
+      <div style="margin-top: 24px; text-align: center;">
+        <a href="index.html" class="view-live-btn" style="justify-content: center;">← Return to Portfolio Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       SIDEBAR NAVIGATION
+       ========================================================================= -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-header">
+      <div class="admin-logo">
+        SIMAR <span class="accent-dot"></span>
+      </div>
+      <div style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--admin-text-dim); margin-top: 4px;">
+        CONTENT MANAGEMENT
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <button class="nav-tab-btn active" data-tab="tab-projects">
+        <span>📁</span> Projects (<span id="projects-count">0</span>)
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-hero">
+        <span>⚡</span> Hero &amp; Intro
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-profile">
+        <span>👤</span> About &amp; Profile
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-skills">
+        <span>🛠️</span> Skills &amp; Services
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-contact">
+        <span>✉️</span> Contact &amp; Socials
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-settings">
+        <span>🎨</span> Theme &amp; Settings
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-database">
+        <span>🗄️</span> Supabase Database
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-session-info" id="admin-user-email">admin@simar.com</div>
+      <a href="index.html" target="_blank" class="view-live-btn">Live Portfolio ↗</a>
+      <button type="button" class="btn-logout" id="btn-admin-logout">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- =========================================================================
+       MAIN CONTENT WORKSPACE
+       ========================================================================= -->
+  <main class="admin-main">
+
+    <!-- TAB 1: PROJECTS MANAGER -->
+    <section class="tab-pane active" id="tab-projects">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">PROJECTS</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">Upload real graphic design case studies, posters, and brand identities.</p>
+        </div>
+        <button type="button" class="btn-primary" onclick="openAddProjectModal()">+ Add New Project</button>
+      </div>
+
+      <!-- Real project list table -->
+      <div class="admin-card" style="padding: 0; overflow-x: auto;">
+        <table class="projects-table">
+          <thead>
+            <tr>
+              <th>Preview</th>
+              <th>Title / Slug</th>
+              <th>Category</th>
+              <th>Year</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-projects-tbody">
+            <!-- Dynamically populated via js/admin.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 2: HERO & INTRO -->
+    <section class="tab-pane" id="tab-hero">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">HERO &amp; HEADLINE</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">Edit top typographic headline and introduction statement.</p>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <form id="admin-hero-form">
+          <div class="form-group">
+            <label for="setting-hero-title">Main Hero Title</label>
+            <input type="text" id="setting-hero-title" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="setting-hero-subtitle">Hero Subtitle / Outline Heading</label>
+            <input type="text" id="setting-hero-subtitle" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="setting-hero-intro">Introduction Statement</label>
+            <textarea id="setting-hero-intro" class="form-textarea" rows="4" required></textarea>
+            <small style="color: var(--admin-text-dim); display: block; margin-top: 6px;">
+              Keep this focused on visual identity, posters, and design philosophy.
+            </small>
+          </div>
+
+          <button type="submit" class="btn-primary">Save Hero Changes</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 3: ABOUT & PROFILE -->
+    <section class="tab-pane" id="tab-profile">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">ABOUT &amp; PROFILE</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">
+            Only filled fields will be visible on the public website. Empty fields are hidden automatically.
+          </p>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <form id="admin-profile-form">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label for="profile-full-name">Designer Name</label>
+              <input type="text" id="profile-full-name" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label for="profile-role-title">Professional Title</label>
+              <input type="text" id="profile-role-title" class="form-input" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="profile-about-text">About Me (Narrative)</label>
+            <textarea id="profile-about-text" class="form-textarea" rows="5"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="profile-philosophy">Design Philosophy / Creative Statement</label>
+            <textarea id="profile-philosophy" class="form-textarea" rows="3" placeholder="Form follows intent..."></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="profile-tools">Tools &amp; Software (Comma-separated)</label>
+            <input type="text" id="profile-tools" class="form-input" placeholder="Figma, Adobe Illustrator, Adobe Photoshop, InDesign">
+          </div>
+
+          <button type="submit" class="btn-primary">Save Profile Info</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 4: SKILLS & SERVICES -->
+    <section class="tab-pane" id="tab-skills">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">SERVICES &amp; SKILLS</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">
+            Manage creative disciplines shown in the Capabilities grid. Reorder or remove at any time.
+          </p>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <h3 class="card-title">ADD NEW SERVICE / SKILL</h3>
+        <form id="admin-add-skill-form" style="display: flex; gap: 12px; margin-top: 16px; flex-wrap: wrap;">
+          <input type="text" id="new-skill-name" class="form-input" style="flex: 2; min-width: 200px;" placeholder="e.g. Editorial Design" required>
+          <input type="text" id="new-skill-category" class="form-input" style="flex: 1; min-width: 150px;" placeholder="Category (e.g. Core, Digital)">
+          <button type="submit" class="btn-primary">+ Add</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h3 class="card-title">ACTIVE SERVICES</h3>
+        <div id="admin-skills-list" style="margin-top: 16px;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 5: CONTACT & SOCIALS -->
+    <section class="tab-pane" id="tab-contact">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">CONTACT &amp; SOCIAL LINKS</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">Provide official contact email and social profiles.</p>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <form id="admin-contact-form">
+          <div class="form-group">
+            <label for="contact-email">Inquiry / Contact Email</label>
+            <input type="email" id="contact-email" class="form-input" placeholder="simar@example.com">
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group">
+              <label for="contact-instagram">Instagram Handle / URL</label>
+              <input type="text" id="contact-instagram" class="form-input" placeholder="@simardesign or URL">
+            </div>
+
+            <div class="form-group">
+              <label for="contact-linkedin">LinkedIn Username / URL</label>
+              <input type="text" id="contact-linkedin" class="form-input" placeholder="simardesigner or URL">
+            </div>
+
+            <div class="form-group">
+              <label for="contact-behance">Behance Username / URL</label>
+              <input type="text" id="contact-behance" class="form-input" placeholder="simar or URL">
+            </div>
+
+            <div class="form-group">
+              <label for="contact-dribbble">Dribbble Username / URL</label>
+              <input type="text" id="contact-dribbble" class="form-input" placeholder="simar or URL">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary">Save Contact Links</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 6: THEME & SETTINGS -->
+    <section class="tab-pane" id="tab-settings">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">THEME &amp; SETTINGS</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">Customize the website accent color and SEO metadata.</p>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <form id="admin-settings-form">
+          <div class="form-group">
+            <label>ACCENT COLOR</label>
+            <div style="display: flex; align-items: center; gap: 16px;">
+              <input type="color" id="setting-accent-color" value="#d4ff00" style="width: 50px; height: 50px; border: none; cursor: pointer; background: transparent;">
+              <input type="text" id="color-hex-input" class="form-input" style="width: 130px; font-family: var(--font-mono);" value="#d4ff00">
+            </div>
+
+            <div style="margin-top: 12px;">
+              <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--admin-text-dim);">RETRO COLOR PRESETS:</span>
+              <div class="color-presets-row" style="flex-wrap: wrap;">
+                <button type="button" class="color-swatch-btn" style="background-color: #ff5722;" data-color="#ff5722" title="Tangerine Sunset"></button>
+                <button type="button" class="color-swatch-btn" style="background-color: #ffb703;" data-color="#ffb703" title="Mustard Gold"></button>
+                <button type="button" class="color-swatch-btn" style="background-color: #00b4d8;" data-color="#00b4d8" title="Risograph Cyan"></button>
+                <button type="button" class="color-swatch-btn" style="background-color: #ff007f;" data-color="#ff007f" title="Vintage Hot Pink"></button>
+                <button type="button" class="color-swatch-btn" style="background-color: #7209b7;" data-color="#7209b7" title="Groovy Violet"></button>
+                <button type="button" class="color-swatch-btn" style="background-color: #2ec4b6;" data-color="#2ec4b6" title="Vintage Mint Green"></button>
+                <button type="button" class="color-swatch-btn" style="background-color: #191614;" data-color="#191614" title="Deep Charcoal Ink"></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 30px;">
+            <label for="setting-site-title">Website Title (Browser Tab)</label>
+            <input type="text" id="setting-site-title" class="form-input" required>
+          </div>
+
+          <div class="form-group">
+            <label for="setting-meta-desc">SEO Meta Description</label>
+            <textarea id="setting-meta-desc" class="form-textarea" rows="3"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary">Save Settings</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- TAB 7: SUPABASE DATABASE & STATUS -->
+    <section class="tab-pane" id="tab-database">
+      <div class="admin-header-row">
+        <div>
+          <h1 class="admin-title">SUPABASE DATABASE</h1>
+          <p style="color: var(--admin-text-muted); font-size: 0.9rem;">Connection status and 1-click database schema migration.</p>
+        </div>
+      </div>
+
+      <div id="db-connection-status" class="status-banner">
+        <!-- Injected via checkDatabaseStatus() -->
+      </div>
+
+      <div class="admin-card">
+        <h3 class="card-title">SUPABASE PROJECT DETAILS</h3>
+        <div style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--admin-text-muted); line-height: 1.8; margin-top: 12px;">
+          <div><strong>Project Ref:</strong> rnekifhfxmixmehiaodv</div>
+          <div><strong>Endpoint URL:</strong> https://rnekifhfxmixmehiaodv.supabase.co</div>
+          <div><strong>Publishable API Key:</strong> Active</div>
+        </div>
+
+        <h3 class="card-title" style="margin-top: 30px;">HOW TO SETUP POSTGRES TABLES IN SUPABASE:</h3>
+        <ol style="margin-left: 20px; color: var(--admin-text-muted); font-size: 0.95rem; line-height: 1.8; margin-top: 10px;">
+          <li>Click the button below to copy the complete schema script:
+            <div style="margin: 12px 0;">
+              <button type="button" class="btn-primary" onclick="copySqlSchema()">📋 Copy supabase_schema.sql</button>
+            </div>
+          </li>
+          <li>Open your Supabase dashboard at:
+            <a href="https://supabase.com/dashboard/project/rnekifhfxmixmehiaodv/sql" target="_blank" style="color: var(--admin-accent); text-decoration: underline;">
+              Supabase SQL Editor ↗
+            </a>
+          </li>
+          <li>Paste the script into a new query and click <strong>Run</strong>.</li>
+          <li>Refresh this page. All tables, Row Level Security (RLS) rules, and the <code>portfolio-images</code> bucket will be live!</li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================================
+       PROJECT ADD / EDIT MODAL
+       ========================================================================= -->
+  <div class="modal-overlay" id="project-modal" style="display: none;">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2 class="card-title" id="project-modal-title">ADD NEW PROJECT</h2>
+        <button type="button" class="modal-close-btn" onclick="closeProjectModal()">&times;</button>
+      </div>
+
+      <form id="project-edit-form">
+        <input type="hidden" id="project-edit-id">
+
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label for="project-title">Project Title *</label>
+            <input type="text" id="project-title" class="form-input" placeholder="e.g. Modernist Kinetic Posters" required>
+          </div>
+
+          <div class="form-group">
+            <label for="project-year">Year</label>
+            <input type="text" id="project-year" class="form-input" placeholder="2026">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label for="project-category">Category *</label>
+            <input type="text" id="project-category" class="form-input" placeholder="Visual Identity, Poster Design, Typography" required>
+          </div>
+
+          <div class="form-group">
+            <label for="project-slug">URL Slug (Auto-generated if empty)</label>
+            <input type="text" id="project-slug" class="form-input" placeholder="modernist-kinetic-posters">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="project-client">Client / Initiative (Optional)</label>
+          <input type="text" id="project-client" class="form-input" placeholder="e.g. Studio Exhibition / Self-Initiated">
+        </div>
+
+        <div class="form-group">
+          <label for="project-short-desc">Short Description * (Appears on Portfolio Grid)</label>
+          <input type="text" id="project-short-desc" class="form-input" placeholder="Brief summary of the visual concept" required>
+        </div>
+
+        <!-- Cover Image Upload / URL -->
+        <div class="form-group" style="background: var(--admin-input-bg); padding: 16px; border: 1px dashed var(--admin-border); border-radius: 4px;">
+          <label for="project-cover-file">Cover Image * (Upload file or enter URL)</label>
+          <input type="file" id="project-cover-file" accept="image/*" class="form-input" style="margin-bottom: 8px;">
+          <input type="url" id="project-cover-url" class="form-input" placeholder="Or enter direct image URL: https://..." required>
+          <div style="margin-top: 10px;">
+            <img id="cover-preview-img" src="" alt="Cover preview" style="max-height: 120px; border-radius: 4px; display: none; object-fit: cover;">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="project-full-desc">Detailed Case Study Overview</label>
+          <textarea id="project-full-desc" class="form-textarea" rows="4" placeholder="Background, concept, typographic direction, and objective..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="project-design-process">Design Process &amp; Technical Execution</label>
+          <textarea id="project-design-process" class="form-textarea" rows="4" placeholder="Exploration of layout grids, typeface selections, print finishing..."></textarea>
+        </div>
+
+        <!-- Additional Gallery Images -->
+        <div class="form-group" style="background: var(--admin-input-bg); padding: 16px; border: 1px dashed var(--admin-border); border-radius: 4px;">
+          <label for="project-gallery-file">Additional Gallery Images (Upload files or list URLs)</label>
+          <input type="file" id="project-gallery-file" accept="image/*" multiple class="form-input" style="margin-bottom: 8px;">
+          <textarea id="project-gallery-urls" class="form-textarea" rows="3" placeholder="One image URL per line"></textarea>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div class="form-group">
+            <label for="project-tools">Tools Used (Comma-separated)</label>
+            <input type="text" id="project-tools" class="form-input" placeholder="Illustrator, InDesign, Glyphs">
+          </div>
+
+          <div class="form-group">
+            <label for="project-external-link">External Project Link (Optional)</label>
+            <input type="url" id="project-external-link" class="form-input" placeholder="https://behance.net/...">
+          </div>
+        </div>
+
+        <div class="form-group" style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+          <input type="checkbox" id="project-is-published" checked style="width: 18px; height: 18px; cursor: pointer;">
+          <label for="project-is-published" style="cursor: pointer; margin: 0;">Publish to website immediately</label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="btn-secondary" onclick="closeProjectModal()">Cancel</button>
+          <button type="submit" class="btn-primary">Save Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/supabase-client.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
