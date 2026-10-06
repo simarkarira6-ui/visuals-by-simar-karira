@@ -501,7 +501,47 @@ body.admin-body {
     width: 100%;
     min-height: auto;
   }
+  .sidebar-nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+  }
+  .nav-tab-btn {
+    width: auto;
+    flex: 1 1 auto;
+    font-size: 0.78rem;
+    padding: 10px 12px;
+    justify-content: center;
+  }
   .admin-main {
-    padding: 20px;
+    padding: 20px 16px;
+  }
+  .admin-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .modal-container {
+    padding: 20px 16px;
+    max-height: 94vh;
+  }
+  .modal-container div[style*="grid-template-columns"] {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .nav-tab-btn {
+    flex: 1 1 45%;
+    font-size: 0.72rem;
+  }
+  .admin-card {
+    padding: 18px 14px;
+  }
+  .admin-title {
+    font-size: 1.8rem;
   }
 }

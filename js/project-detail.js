@@ -196,10 +196,21 @@ window.openLightbox = function(imageUrl) {
   if (modal && img) {
     img.src = imageUrl;
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
   }
 };
 
 window.closeLightbox = function() {
   const modal = document.getElementById('lightbox-modal');
-  if (modal) modal.style.display = 'none';
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
 };
+
+// Global escape listener for lightbox
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    window.closeLightbox();
+  }
+});

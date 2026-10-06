@@ -1,11 +1,13 @@
 /* ==========================================================================
-   SIMAR — GRAPHIC DESIGNER PORTFOLIO
+   SIMAR KARIRA — GRAPHIC DESIGNER PORTFOLIO
    Design Aesthetic: Bold Retro Vintage Graphic Arts / Editorial Risograph & Printshop
+   Highly Functional, Fast, Visually Premium & Fully Responsive (Mobile, Tablet, Laptop, Desktop)
    ========================================================================== */
 
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&family=Inter:wght@400;500;600&display=swap');
 
 :root {
+  /* Force native color scheme to light (prevents forced dark inversion) */
   color-scheme: light only;
   forced-color-adjust: none;
 
@@ -47,13 +49,16 @@
 
   /* Retro Offset Shadows */
   --shadow-retro: 4px 4px 0px var(--retro-ink);
+  --shadow-retro-sm: 2px 2px 0px var(--retro-ink);
   --shadow-retro-lg: 8px 8px 0px var(--retro-ink);
   --shadow-retro-hover: 6px 6px 0px var(--retro-ink);
   --border-retro: 2px solid var(--retro-ink);
   --border-retro-thick: 3px solid var(--retro-ink);
 
-  --container-max: 1380px;
+  --container-max: 1360px;
+  --header-height: 74px;
   --transition-pop: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-smooth: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Base Reset */
@@ -65,28 +70,39 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
   font-size: 16px;
   background-color: var(--retro-paper);
   color: var(--retro-ink);
   font-family: var(--font-mono);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   color-scheme: light only;
   forced-color-adjust: none;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
   line-height: 1.55;
   background-color: var(--retro-paper) !important;
   color: var(--retro-ink) !important;
   color-scheme: light only;
   forced-color-adjust: none;
-  /* Subtle vintage print grain & paper texture */
   background-image: 
     radial-gradient(circle at 50% 50%, rgba(25, 22, 20, 0.035) 1px, transparent 1px),
     linear-gradient(to right, rgba(25, 22, 20, 0.015) 1px, transparent 1px);
   background-size: 24px 24px, 120px 120px;
+}
+
+body.menu-open {
+  overflow: hidden !important;
+  touch-action: none;
 }
 
 /* Selection */
@@ -95,13 +111,20 @@ body {
   color: var(--accent-contrast);
 }
 
+/* Accessible Focus States */
+:focus-visible {
+  outline: 3px solid var(--accent-color);
+  outline-offset: 3px;
+}
+
 /* Typography Hierarchy */
 h1, h2, h3, h4, .vintage-font {
   font-family: var(--font-vintage);
-  font-weight: 800;
+  font-weight: 900;
   line-height: 0.95;
   color: var(--retro-ink);
   letter-spacing: -0.02em;
+  font-optical-sizing: auto;
 }
 
 p {
@@ -115,6 +138,7 @@ a {
   color: inherit;
   text-decoration: none;
   transition: var(--transition-pop);
+  -webkit-tap-highlight-color: transparent;
 }
 
 button {
@@ -122,16 +146,25 @@ button {
   cursor: pointer;
   border: none;
   background: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .mono {
   font-family: var(--font-mono);
 }
 
+/* Responsive Containers */
 .container {
+  width: 100%;
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 44px;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    padding: 0 32px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -140,36 +173,47 @@ button {
   }
 }
 
+@media (max-width: 480px) {
+  .container {
+    padding: 0 16px;
+  }
+}
+
 /* ==========================================================================
-   RETRO VINTAGE HEADER
+   RETRO VINTAGE HEADER & NAVIGATION
    ========================================================================== */
 .site-header {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
+  height: var(--header-height);
   z-index: 1000;
-  padding: 18px 0;
   background-color: var(--retro-paper);
   border-bottom: var(--border-retro-thick);
   box-shadow: 0 4px 0 rgba(25, 22, 20, 0.08);
+  display: flex;
+  align-items: center;
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  gap: 16px;
 }
 
 .logo-wrap {
   display: flex;
   align-items: center;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .site-logo {
   font-family: var(--font-vintage);
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
   font-weight: 900;
   color: var(--retro-ink);
   display: flex;
@@ -190,6 +234,7 @@ button {
   border: 1.5px solid var(--retro-ink);
   box-shadow: 2px 2px 0px var(--retro-ink);
   transform: rotate(-3deg);
+  display: inline-block;
 }
 
 .role-badge {
@@ -206,21 +251,22 @@ button {
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: clamp(12px, 2vw, 24px);
   list-style: none;
 }
 
 .nav-link {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--retro-ink);
-  padding: 6px 12px;
+  padding: 7px 14px;
   border-radius: 4px;
   border: 2px solid transparent;
   transition: var(--transition-pop);
+  display: inline-block;
 }
 
 .nav-link:hover, .nav-link.active {
@@ -233,7 +279,8 @@ button {
 .header-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .admin-link {
@@ -241,14 +288,14 @@ button {
   align-items: center;
   gap: 6px;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-size: 0.78rem;
+  font-weight: 800;
   text-transform: uppercase;
   color: var(--retro-ink);
   background-color: var(--retro-paper-dark);
-  padding: 7px 14px;
+  padding: 8px 14px;
   border: var(--border-retro);
-  border-radius: 4px;
+  border-radius: 5px;
   box-shadow: 2px 2px 0px var(--retro-ink);
   transition: var(--transition-pop);
 }
@@ -259,18 +306,147 @@ button {
   box-shadow: 4px 4px 0px var(--retro-ink);
 }
 
+/* Animated Hamburger Toggle */
 .mobile-menu-toggle {
   display: none;
-  font-size: 1.6rem;
-  color: var(--retro-ink);
+  width: 44px;
+  height: 44px;
+  padding: 10px 8px;
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro);
+  border-radius: 6px;
+  box-shadow: 2px 2px 0px var(--retro-ink);
+  cursor: pointer;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1002;
+  transition: var(--transition-pop);
+}
+
+.mobile-menu-toggle:hover {
+  background-color: var(--color-yellow);
+}
+
+.mobile-menu-toggle:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0px var(--retro-ink);
+}
+
+.hamburger-bar {
+  display: block;
+  width: 24px;
+  height: 2.5px;
+  background-color: var(--retro-ink);
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center;
+}
+
+.mobile-menu-toggle.is-active .hamburger-bar:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.mobile-menu-toggle.is-active .hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
+.mobile-menu-toggle.is-active .hamburger-bar:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile Menu Backdrop */
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(25, 22, 20, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+.mobile-menu-backdrop.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Navigation Breakpoints */
+@media (min-width: 881px) {
+  .mobile-only-admin {
+    display: none !important;
+  }
+}
+
+@media (max-width: 880px) {
+  .desktop-admin-link {
+    display: none !important;
+  }
+  .mobile-menu-toggle {
+    display: flex;
+  }
+  .role-badge {
+    display: none;
+  }
+  .nav-links {
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background-color: var(--retro-paper);
+    border-bottom: var(--border-retro-thick);
+    box-shadow: 0 16px 30px rgba(25, 22, 20, 0.15);
+    padding: 20px 20px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    z-index: 999;
+    transform: translateY(-120%);
+    opacity: 0;
+    visibility: hidden;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease, visibility 0.35s;
+  }
+  .nav-links.open {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  .nav-link {
+    font-size: 1.1rem;
+    padding: 13px 20px;
+    text-align: center;
+    border: var(--border-retro);
+    background-color: var(--retro-paper-light);
+    box-shadow: 2px 2px 0px var(--retro-ink);
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .nav-link:hover, .nav-link.active {
+    background-color: var(--color-yellow);
+    box-shadow: 3px 3px 0px var(--retro-ink);
+  }
+  .admin-nav-item {
+    background-color: var(--color-lime) !important;
+    font-weight: 800;
+  }
 }
 
 /* ==========================================================================
    HERO SECTION (Bold Vintage Typography & Colorful Retro Accents)
    ========================================================================== */
 .hero-section {
-  padding-top: 150px;
-  padding-bottom: 70px;
+  padding-top: clamp(115px, 15vw, 155px);
+  padding-bottom: clamp(40px, 6vw, 70px);
   position: relative;
   border-bottom: var(--border-retro-thick);
   background: 
@@ -281,7 +457,7 @@ button {
 .hero-editorial-grid {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: clamp(20px, 3.5vw, 32px);
   position: relative;
 }
 
@@ -290,29 +466,30 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  flex-wrap: wrap;
+  gap: 14px;
   border-bottom: 2px dashed var(--retro-ink);
-  padding-bottom: 18px;
+  padding-bottom: 16px;
 }
 
 .hero-tag {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: clamp(0.72rem, 1.6vw, 0.85rem);
   font-weight: 700;
   text-transform: uppercase;
   background-color: var(--retro-paper-light);
   border: var(--border-retro);
   padding: 6px 14px;
   border-radius: 20px;
-  box-shadow: 3px 3px 0px var(--retro-ink);
+  box-shadow: 2px 2px 0px var(--retro-ink);
 }
 
 .retro-sparkle {
   color: var(--accent-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .retro-stickers-wrap {
@@ -324,11 +501,11 @@ button {
 
 .retro-sticker {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: clamp(0.68rem, 1.4vw, 0.75rem);
   font-weight: 800;
   text-transform: uppercase;
-  padding: 4px 10px;
-  border-radius: 3px;
+  padding: 5px 12px;
+  border-radius: 4px;
   border: var(--border-retro);
   box-shadow: 2px 2px 0px var(--retro-ink);
 }
@@ -347,47 +524,51 @@ button {
 
 /* Giant Vintage Headline */
 .hero-typography {
-  margin: 10px 0;
+  margin: 4px 0;
   position: relative;
 }
 
 .hero-giant-title {
   font-family: var(--font-vintage);
-  font-size: clamp(5.5rem, 18vw, 16rem);
+  font-size: clamp(2.8rem, 10.5vw, 9.8rem);
   font-weight: 900;
-  line-height: 0.82;
+  line-height: 0.88;
   letter-spacing: -0.04em;
   color: var(--retro-ink) !important;
   text-transform: uppercase;
-  text-shadow: 6px 6px 0px var(--accent-color) !important;
-  margin-left: -5px;
+  text-shadow: clamp(3px, 0.8vw, 6px) clamp(3px, 0.8vw, 6px) 0px var(--accent-color) !important;
+  margin-left: -2px;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .hero-giant-subtitle {
   font-family: var(--font-vintage);
-  font-size: clamp(2.2rem, 8vw, 7rem);
+  font-size: clamp(1.4rem, 5.2vw, 4.6rem);
   font-weight: 900;
-  line-height: 0.88;
-  letter-spacing: -0.03em;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   color: var(--color-yellow);
-  -webkit-text-stroke: 3px var(--retro-ink);
+  -webkit-text-stroke: clamp(1.5px, 0.25vw, 3px) var(--retro-ink);
   text-transform: uppercase;
-  text-shadow: 4px 4px 0px var(--retro-ink);
-  margin-top: 10px;
+  text-shadow: clamp(2px, 0.4vw, 4px) clamp(2px, 0.4vw, 4px) 0px var(--retro-ink);
+  margin-top: clamp(8px, 1.5vw, 14px);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .hero-bottom-grid {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
-  gap: 50px;
+  gap: clamp(24px, 4vw, 50px);
   align-items: center;
-  margin-top: 20px;
+  margin-top: clamp(14px, 2.5vw, 24px);
 }
 
 .hero-intro-card {
   background-color: var(--retro-paper-light);
   border: var(--border-retro-thick);
-  padding: 28px 32px;
+  padding: clamp(20px, 3.5vw, 28px);
   border-radius: 8px;
   box-shadow: var(--shadow-retro);
   position: relative;
@@ -399,14 +580,14 @@ button {
   top: -24px;
   left: 20px;
   font-family: var(--font-vintage);
-  font-size: 5rem;
+  font-size: clamp(3.5rem, 6vw, 4.8rem);
   color: var(--accent-color);
   line-height: 1;
 }
 
 .hero-intro-text {
   font-family: var(--font-mono);
-  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
   line-height: 1.55;
   color: var(--retro-ink);
   font-weight: 600;
@@ -421,7 +602,7 @@ button {
   justify-content: flex-end;
 }
 
-/* Retro Buttons with Pop Shadow */
+/* Retro Action Buttons */
 .btn-primary {
   display: inline-flex;
   align-items: center;
@@ -434,7 +615,8 @@ button {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 16px 32px;
+  padding: 15px 30px;
+  min-height: 50px;
   border: var(--border-retro-thick);
   border-radius: 6px;
   box-shadow: var(--shadow-retro);
@@ -445,6 +627,11 @@ button {
   transform: translate(-3px, -3px);
   box-shadow: var(--shadow-retro-hover);
   background-color: var(--color-orange);
+}
+
+.btn-primary:active {
+  transform: translate(0px, 0px);
+  box-shadow: var(--shadow-retro-sm);
 }
 
 .btn-secondary {
@@ -459,7 +646,8 @@ button {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  padding: 16px 28px;
+  padding: 15px 26px;
+  min-height: 50px;
   border: var(--border-retro-thick);
   border-radius: 6px;
   box-shadow: var(--shadow-retro);
@@ -472,11 +660,52 @@ button {
   background-color: var(--color-yellow);
 }
 
+.btn-secondary:active {
+  transform: translate(0px, 0px);
+  box-shadow: var(--shadow-retro-sm);
+}
+
+/* Hero Mobile Adjustments */
+@media (max-width: 900px) {
+  .hero-bottom-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .hero-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-meta-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .hero-tag {
+    width: 100%;
+    justify-content: center;
+  }
+  .retro-stickers-wrap {
+    width: 100%;
+    justify-content: center;
+  }
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+}
+
 /* ==========================================================================
    RETRO KINETIC TICKER
    ========================================================================== */
 .ticker-wrap {
   width: 100%;
+  max-width: 100%;
   overflow: hidden;
   background-color: var(--color-yellow);
   border-bottom: var(--border-retro-thick);
@@ -487,23 +716,24 @@ button {
 
 .ticker-content {
   display: inline-flex;
-  animation: ticker 30s linear infinite;
+  animation: ticker 32s linear infinite;
+  will-change: transform;
 }
 
 .ticker-item {
   font-family: var(--font-vintage);
-  font-size: 1.15rem;
+  font-size: clamp(0.95rem, 1.8vw, 1.15rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--retro-ink);
-  padding: 0 28px;
+  padding: 0 24px;
 }
 
 .ticker-item span {
   color: var(--accent-color);
-  margin-left: 20px;
-  font-size: 1.3rem;
+  margin-left: 18px;
+  font-size: 1.25rem;
 }
 
 @keyframes ticker {
@@ -511,22 +741,29 @@ button {
   100% { transform: translateX(-50%); }
 }
 
+/* Pause on hover */
+.ticker-wrap:hover .ticker-content {
+  animation-play-state: paused;
+}
+
 /* ==========================================================================
    SECTION COMMON LAYOUT
    ========================================================================== */
 .section {
-  padding: 110px 0;
+  padding: clamp(65px, 9vw, 120px) 0;
   border-bottom: var(--border-retro-thick);
   position: relative;
+  scroll-margin-top: var(--header-height);
 }
 
 .section-header-editorial {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 60px;
+  margin-bottom: clamp(36px, 5.5vw, 64px);
   border-bottom: var(--border-retro-thick);
-  padding-bottom: 24px;
+  padding-bottom: 22px;
+  gap: 20px;
 }
 
 .section-stamp-pill {
@@ -534,13 +771,13 @@ button {
   align-items: center;
   gap: 8px;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   background-color: var(--color-cyan);
   color: #fff;
-  padding: 4px 12px;
+  padding: 5px 12px;
   border: var(--border-retro);
   border-radius: 4px;
   box-shadow: 2px 2px 0px var(--retro-ink);
@@ -549,15 +786,16 @@ button {
 
 .section-title {
   font-family: var(--font-vintage);
-  font-size: clamp(2.8rem, 6vw, 5.5rem);
+  font-size: clamp(2.3rem, 5.8vw, 5.2rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   color: var(--retro-ink);
+  line-height: 0.98;
 }
 
 .section-subtitle {
   font-family: var(--font-mono);
-  font-size: 1rem;
+  font-size: clamp(0.85rem, 1.4vw, 0.98rem);
   font-weight: 600;
   color: var(--retro-ink-muted);
   max-width: 340px;
@@ -569,13 +807,26 @@ button {
   box-shadow: 3px 3px 0px var(--retro-ink);
 }
 
+@media (max-width: 768px) {
+  .section-header-editorial {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .section-subtitle {
+    text-align: left;
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
 /* ==========================================================================
    01 / ABOUT SECTION
    ========================================================================== */
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 60px;
+  grid-template-columns: 1fr 1.25fr;
+  gap: clamp(32px, 5vw, 60px);
   align-items: start;
 }
 
@@ -583,14 +834,14 @@ button {
   background-color: var(--card-tint-1);
   border: var(--border-retro-thick);
   border-radius: 12px;
-  padding: 40px;
+  padding: clamp(24px, 4vw, 40px);
   box-shadow: var(--shadow-retro-lg);
   position: relative;
 }
 
 .retro-seal {
-  width: 90px;
-  height: 90px;
+  width: clamp(75px, 12vw, 90px);
+  height: clamp(75px, 12vw, 90px);
   border: 3px dashed var(--retro-ink);
   border-radius: 50%;
   display: flex;
@@ -604,12 +855,12 @@ button {
   background-color: var(--color-yellow);
   box-shadow: 3px 3px 0px var(--retro-ink);
   transform: rotate(-8deg);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .about-statement {
   font-family: var(--font-vintage);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-size: clamp(1.6rem, 3.2vw, 2.6rem);
   line-height: 1.15;
   font-weight: 900;
   letter-spacing: -0.02em;
@@ -619,30 +870,30 @@ button {
 .about-details {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: clamp(20px, 3.5vw, 32px);
 }
 
 .about-narrative-card {
   background-color: var(--retro-paper-light);
   border: var(--border-retro-thick);
   border-radius: 10px;
-  padding: 32px;
+  padding: clamp(22px, 3.5vw, 32px);
   box-shadow: var(--shadow-retro);
 }
 
 .about-narrative {
   font-family: var(--font-mono);
-  font-size: 1.2rem;
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
   font-weight: 500;
   color: var(--retro-ink);
-  line-height: 1.7;
+  line-height: 1.65;
 }
 
 .about-block-vintage {
   background-color: var(--retro-paper-light);
   border: var(--border-retro-thick);
   border-radius: 10px;
-  padding: 28px 32px;
+  padding: clamp(20px, 3vw, 28px) clamp(22px, 3.5vw, 32px);
   box-shadow: var(--shadow-retro);
 }
 
@@ -664,7 +915,7 @@ button {
 
 .philosophy-text {
   font-family: var(--font-vintage);
-  font-size: 1.4rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
   font-style: italic;
   font-weight: 700;
   color: var(--retro-ink);
@@ -675,12 +926,12 @@ button {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .tool-chip {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: clamp(0.78rem, 1.5vw, 0.85rem);
   font-weight: 700;
   background-color: var(--color-yellow);
   color: var(--retro-ink);
@@ -698,28 +949,34 @@ button {
   color: #fff;
 }
 
+@media (max-width: 960px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 /* ==========================================================================
    02 / SERVICES & SKILLS SECTION (Vibrant Colorful Risograph Cards)
    ========================================================================== */
 .skills-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: clamp(16px, 2.5vw, 24px);
 }
 
 .skill-card {
-  padding: 32px 28px;
+  padding: clamp(24px, 3.5vw, 32px) clamp(20px, 3vw, 28px);
   border: var(--border-retro-thick);
   border-radius: 10px;
   box-shadow: var(--shadow-retro);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 190px;
+  min-height: 185px;
   transition: var(--transition-pop);
 }
 
-/* Distinct retro vibrant colorways for each skill card */
 .skill-card:nth-child(1) { background-color: var(--card-tint-1); }
 .skill-card:nth-child(2) { background-color: var(--card-tint-2); }
 .skill-card:nth-child(3) { background-color: var(--card-tint-3); }
@@ -765,46 +1022,62 @@ button {
 
 .skill-name {
   font-family: var(--font-vintage);
-  font-size: 2rem;
+  font-size: clamp(1.6rem, 2.5vw, 2rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--retro-ink);
-  margin-top: 24px;
+  margin-top: 20px;
   line-height: 1.1;
 }
 
+@media (max-width: 600px) {
+  .skills-list {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .skill-card {
+    min-height: auto;
+    padding: 22px 18px;
+  }
+}
+
 /* ==========================================================================
-   03 / PORTFOLIO / WORK SECTION (Strictly NO fake data!)
+   03 / PORTFOLIO / WORK SECTION (Professional Case Studies)
    ========================================================================== */
 .portfolio-controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 40px;
+  margin-bottom: clamp(24px, 4vw, 40px);
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 16px;
 }
 
 .filter-group {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .filter-btn {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--retro-ink);
   background-color: var(--retro-paper-light);
-  padding: 10px 22px;
+  padding: 9px 20px;
+  min-height: 42px;
   border: var(--border-retro);
   border-radius: 30px;
   box-shadow: 3px 3px 0px var(--retro-ink);
   transition: var(--transition-pop);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .filter-btn:hover, .filter-btn.active {
@@ -817,10 +1090,10 @@ button {
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
+  gap: clamp(24px, 4vw, 40px);
 }
 
-/* Real Project Card */
+/* Real Case Study Project Card */
 .project-card {
   position: relative;
   display: flex;
@@ -831,6 +1104,8 @@ button {
   overflow: hidden;
   box-shadow: var(--shadow-retro);
   transition: var(--transition-pop);
+  text-decoration: none;
+  color: var(--retro-ink);
 }
 
 .project-card:hover {
@@ -838,9 +1113,14 @@ button {
   box-shadow: var(--shadow-retro-lg);
 }
 
+.project-card:active {
+  transform: translate(0px, 0px);
+  box-shadow: var(--shadow-retro-sm);
+}
+
 .project-thumb-wrap {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
   border-bottom: var(--border-retro-thick);
   position: relative;
@@ -851,7 +1131,8 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .project-card:hover .project-thumb {
@@ -861,7 +1142,7 @@ button {
 .project-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(25, 22, 20, 0.4);
+  background: rgba(25, 22, 20, 0.35);
   opacity: 0;
   display: flex;
   align-items: center;
@@ -875,7 +1156,7 @@ button {
 
 .view-case-btn {
   font-family: var(--font-mono);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 800;
   text-transform: uppercase;
   color: var(--accent-contrast);
@@ -887,7 +1168,10 @@ button {
 }
 
 .project-info {
-  padding: 24px;
+  padding: clamp(18px, 2.5vw, 26px);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .project-meta {
@@ -899,7 +1183,7 @@ button {
 
 .project-cat {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -913,34 +1197,68 @@ button {
 
 .project-year {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   color: var(--retro-ink-muted);
 }
 
 .project-title {
   font-family: var(--font-vintage);
-  font-size: 2rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.95rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--retro-ink);
-  line-height: 1.1;
+  line-height: 1.15;
+  margin-top: 4px;
 }
 
 .project-desc-short {
-  margin-top: 8px;
-  font-size: 1rem;
+  margin-top: 10px;
+  font-size: 0.96rem;
   color: var(--retro-ink-muted);
   line-height: 1.55;
+  flex: 1;
+}
+
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1.5px dashed var(--retro-ink);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--retro-ink);
+}
+
+.project-card-arrow {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.project-card:hover .project-card-arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 860px) {
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
 }
 
 /* ==========================================================================
-   RETRO ARCHIVAL EMPTY STATE (NO DUMMY PROJECTS)
+   RETRO ARCHIVAL EMPTY STATE (Strictly Zero Fake Projects)
    ========================================================================== */
 .empty-portfolio-editorial {
   grid-column: 1 / -1;
-  padding: 90px 40px;
+  padding: clamp(50px, 8vw, 90px) clamp(20px, 4vw, 40px);
   border: 3px dashed var(--retro-ink);
   border-radius: 14px;
   background-color: var(--card-tint-2);
@@ -949,14 +1267,14 @@ button {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 18px;
   box-shadow: var(--shadow-retro);
   position: relative;
 }
 
 .empty-graphic-icon {
-  width: 80px;
-  height: 80px;
+  width: clamp(65px, 10vw, 80px);
+  height: clamp(65px, 10vw, 80px);
   border: var(--border-retro-thick);
   border-radius: 50%;
   display: flex;
@@ -973,25 +1291,26 @@ button {
 
 .empty-title {
   font-family: var(--font-vintage);
-  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-size: clamp(1.8rem, 4.5vw, 3.4rem);
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: -0.03em;
   color: var(--retro-ink);
+  line-height: 1.05;
 }
 
 .empty-desc {
   max-width: 520px;
   font-family: var(--font-mono);
   color: var(--retro-ink);
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
   font-weight: 500;
   line-height: 1.6;
 }
 
 .empty-meta-tag {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.12em;
@@ -1007,26 +1326,28 @@ button {
    04 / CONTACT SECTION (Retro Screenprint Style)
    ========================================================================== */
 .contact-section {
-  padding: 130px 0;
+  padding: clamp(65px, 9vw, 130px) 0;
   background-color: var(--retro-paper-dark);
 }
 
 .contact-huge-headline {
   font-family: var(--font-vintage);
-  font-size: clamp(3.8rem, 12vw, 11rem);
+  font-size: clamp(2.4rem, 8vw, 8.5rem);
   font-weight: 900;
-  line-height: 0.84;
+  line-height: 0.88;
   letter-spacing: -0.04em;
   text-transform: uppercase;
   color: var(--retro-ink);
-  text-shadow: 6px 6px 0px var(--color-yellow);
-  margin-bottom: 60px;
+  text-shadow: clamp(3px, 0.6vw, 6px) clamp(3px, 0.6vw, 6px) 0px var(--color-yellow);
+  margin-bottom: clamp(32px, 5vw, 60px);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 .contact-grid {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
-  gap: 60px;
+  gap: clamp(32px, 5vw, 60px);
   align-items: start;
 }
 
@@ -1034,14 +1355,14 @@ button {
   background-color: var(--retro-paper-light);
   border: var(--border-retro-thick);
   border-radius: 12px;
-  padding: 36px;
+  padding: clamp(24px, 4vw, 36px);
   box-shadow: var(--shadow-retro-lg);
 }
 
 .contact-box-label {
   display: inline-block;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1051,24 +1372,26 @@ button {
   border-radius: 4px;
   border: var(--border-retro);
   box-shadow: 2px 2px 0px var(--retro-ink);
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .email-display-row {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
 .email-address {
   font-family: var(--font-vintage);
-  font-size: clamp(1.6rem, 3.2vw, 2.5rem);
+  font-size: clamp(1.3rem, 2.8vw, 2.3rem);
   font-weight: 900;
   color: var(--retro-ink);
   text-decoration: underline;
   text-underline-offset: 6px;
   text-decoration-color: var(--accent-color);
+  word-break: break-all;
+  overflow-wrap: break-word;
 }
 
 .email-address:hover {
@@ -1081,6 +1404,7 @@ button {
   font-weight: 800;
   text-transform: uppercase;
   padding: 10px 18px;
+  min-height: 44px;
   border: var(--border-retro);
   background-color: var(--color-yellow);
   color: var(--retro-ink);
@@ -1096,24 +1420,30 @@ button {
   color: #fff;
 }
 
+.copy-email-btn:active {
+  transform: translate(0px, 0px);
+  box-shadow: 2px 2px 0px var(--retro-ink);
+}
+
 .social-links-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
 }
 
 .social-link-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
+  padding: clamp(16px, 2.5vw, 20px) clamp(18px, 3vw, 24px);
+  min-height: 58px;
   background-color: var(--retro-paper-light);
   border: var(--border-retro-thick);
   border-radius: 8px;
   box-shadow: var(--shadow-retro);
   font-family: var(--font-vintage);
-  font-size: 1.6rem;
-  font-weight: 800;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  font-weight: 900;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   color: var(--retro-ink);
@@ -1126,17 +1456,29 @@ button {
   box-shadow: var(--shadow-retro-lg);
 }
 
+.social-link-item:active {
+  transform: translate(0px, 0px);
+  box-shadow: var(--shadow-retro-sm);
+}
+
 .social-arrow {
   font-family: var(--font-mono);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
 /* ==========================================================================
    RETRO FOOTER
    ========================================================================== */
 .site-footer {
-  padding: 60px 0;
+  padding: clamp(40px, 6vw, 60px) 0;
   border-top: var(--border-retro-thick);
   background-color: var(--retro-paper);
 }
@@ -1146,12 +1488,12 @@ button {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 24px;
+  gap: 20px;
 }
 
 .footer-brand {
   font-family: var(--font-vintage);
-  font-size: 1.5rem;
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
   font-weight: 900;
   letter-spacing: -0.03em;
   color: var(--retro-ink);
@@ -1159,24 +1501,25 @@ button {
 
 .footer-copy {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   font-weight: 600;
   color: var(--retro-ink-muted);
 }
 
 .back-to-top {
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--retro-ink);
   background-color: var(--color-yellow);
   padding: 8px 16px;
+  min-height: 40px;
   border: var(--border-retro);
   border-radius: 4px;
   box-shadow: 2px 2px 0px var(--retro-ink);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   transition: var(--transition-pop);
@@ -1187,63 +1530,65 @@ button {
   box-shadow: 4px 4px 0px var(--retro-ink);
 }
 
-/* ==========================================================================
-   RESPONSIVE DESIGN
-   ========================================================================== */
-@media (max-width: 1024px) {
-  .hero-bottom-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .hero-actions {
-    justify-content: flex-start;
-  }
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-  .contact-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
+.back-to-top:active {
+  transform: translate(0px, 0px);
+  box-shadow: 1px 1px 0px var(--retro-ink);
 }
 
 @media (max-width: 768px) {
-  .site-header {
-    padding: 14px 0;
-  }
-  .nav-links {
-    display: none;
-  }
-  .nav-links.open {
-    display: flex;
+  .footer-inner {
     flex-direction: column;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: var(--retro-paper);
-    border-bottom: var(--border-retro-thick);
-    padding: 24px;
-    gap: 16px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-  }
-  .mobile-menu-toggle {
-    display: block;
-  }
-  .projects-grid {
-    grid-template-columns: 1fr;
-    gap: 30px;
-  }
-  .section {
-    padding: 70px 0;
-  }
-  .section-header-editorial {
-    flex-direction: column;
-    align-items: flex-start;
+    text-align: center;
     gap: 16px;
   }
-  .section-subtitle {
-    text-align: left;
+  .back-to-top {
+    margin-top: 6px;
+  }
+}
+
+/* ==========================================================================
+   RETRO FLOATING TOAST FEEDBACK
+   ========================================================================== */
+.retro-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 5000;
+  background-color: var(--retro-paper-light);
+  border: var(--border-retro-thick);
+  border-radius: 8px;
+  padding: 14px 22px;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--retro-ink);
+  box-shadow: 4px 4px 0px var(--retro-ink);
+  transform: translateY(120px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.retro-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.retro-toast.success {
+  background-color: var(--color-lime);
+}
+
+@media (max-width: 600px) {
+  .retro-toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    justify-content: center;
   }
 }

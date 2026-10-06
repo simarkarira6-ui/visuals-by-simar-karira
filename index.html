@@ -28,29 +28,37 @@
   <header class="site-header" id="site-header">
     <div class="container header-inner">
       <div class="logo-wrap">
-        <a href="#hero" class="site-logo">
+        <a href="#hero" class="site-logo" aria-label="Simar Karira - Home">
           SIMAR <span class="logo-stamp">STUDIO</span>
         </a>
         <span class="role-badge">Graphic Designer</span>
       </div>
 
-      <nav>
+      <nav id="site-nav" aria-label="Main Navigation">
         <ul class="nav-links" id="nav-links">
           <li><a href="#about" class="nav-link">About</a></li>
           <li><a href="#skills" class="nav-link">Services</a></li>
           <li><a href="#work" class="nav-link">Work</a></li>
           <li><a href="#contact" class="nav-link">Contact</a></li>
+          <li class="mobile-only-admin"><a href="admin.html" class="nav-link admin-nav-item">⚙ Admin Portal ↗</a></li>
         </ul>
       </nav>
 
       <div class="header-actions">
-        <a href="admin.html" class="admin-link" title="Admin Dashboard">
+        <a href="admin.html" class="admin-link desktop-admin-link" title="Admin Dashboard">
           <span>⚙</span> Admin Portal
         </a>
-        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation">☰</button>
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="nav-links">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
       </div>
     </div>
   </header>
+
+  <!-- Mobile Menu Backdrop Overlay -->
+  <div class="mobile-menu-backdrop" id="mobile-menu-backdrop" aria-hidden="true"></div>
 
   <!-- =========================================================================
        HERO SECTION (Bold Vintage Typography & Colorful Retro Accents)
